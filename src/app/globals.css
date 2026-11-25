@@ -1,16 +1,25 @@
+@import "tailwindcss";
+
+/* ========================================
+   1. BRAND COLOURS & DESIGN TOKENS
+   ======================================== */
+
 :root {
-  /* Brand colours */
+  color-scheme: light;
+
+  /* Retro brand palette */
   --cream: #ebe0ce;
   --sandstone: #d5a17d;
   --terracotta: #c17f65;
   --burnt-orange: #b84912;
   --mustard: #dda00d;
   --petrol-blue: #087599;
+  --charcoal: #34322e;
 
   /* Functional colours */
   --background: #ebe0ce;
-  --surface: #f8f2e7;
   --foreground: #34322e;
+  --surface: #f8f2e7;
   --muted: #71685d;
   --border: #c9bca7;
 
@@ -18,11 +27,237 @@
   --primary-hover: #065a76;
   --secondary: #b84912;
 
+  /* Status colours */
   --success: #496b48;
   --danger: #a32e25;
+  --warning: #92630b;
 
-  /* Shape */
+  /* Border radius */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 20px;
+}
+
+/* ========================================
+   2. TAILWIND THEME
+   ======================================== */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+
+  --color-cream: var(--cream);
+  --color-sandstone: var(--sandstone);
+  --color-terracotta: var(--terracotta);
+  --color-burnt-orange: var(--burnt-orange);
+  --color-mustard: var(--mustard);
+  --color-petrol-blue: var(--petrol-blue);
+  --color-charcoal: var(--charcoal);
+
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+
+  --font-sans: var(--font-dm-sans);
+  --font-display: var(--font-fraunces);
+}
+
+/* ========================================
+   3. GLOBAL STYLES
+   ======================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-dm-sans), Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 650;
+  line-height: 1.15;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--sandstone);
+  color: var(--charcoal);
+}
+
+:focus-visible {
+  outline: 3px solid var(--petrol-blue);
+  outline-offset: 4px;
+}
+
+/* ========================================
+   4. REUSABLE BUTTONS
+   ======================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  font-weight: 600;
+  text-align: center;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #963b10;
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: var(--primary);
+  color: #065a76;
+}
+
+.btn-outline:hover {
+  background: var(--surface);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ========================================
+   5. CARDS
+   ======================================== */
+
+.pm-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+
+.pm-card-title {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 1.4rem;
+  font-weight: 650;
+  margin-bottom: 8px;
+}
+
+/* ========================================
+   6. FORM ELEMENTS
+   ======================================== */
+
+.pm-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.pm-input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid #998c78;
+  border-radius: var(--radius-sm);
+  color: var(--foreground);
+}
+
+.pm-input:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.pm-input::placeholder {
+  color: var(--muted);
+}
+
+.pm-error {
+  font-size: 0.9rem;
+  color: var(--danger);
+}
+
+/* ========================================
+   7. BRAND DECORATIONS
+   ======================================== */
+
+.retro-stripe {
+  height: 20px;
+  width: 100%;
+  background: linear-gradient(
+    to bottom,
+    var(--burnt-orange) 0% 20%,
+    var(--terracotta) 20% 40%,
+    var(--sandstone) 40% 60%,
+    var(--mustard) 60% 80%,
+    var(--petrol-blue) 80% 100%
+  );
+}
+
+.eyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--burnt-orange);
+}
+
+/* ========================================
+   8. ACCESSIBILITY
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
 }
