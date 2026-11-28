@@ -1,75 +1,49 @@
-import { auth, signOut } from "@/auth";
-import { redirect } from "next/navigation";
-import Logo from "@/components/Logo";
+import { requireUser } from "@/lib/authorization";
 
 export default async function DashboardPage() {
-    const session = await auth();
-
-    // Prevent unauthenticated access
-    if (!session?.user) {
-        redirect("/login");
-    }
+    const user = await requireUser();
 
     return (
-        <div className="min-h-screen">
-            <header className="border-b border-border">
-                <nav className="max-w-7xl mx-auto px-6 py-4 flex flex-wrap items-center justify-between gap-4">
-                    <Logo />
+        <section className="max-w-7xl mx-auto px-6 py-12">
+            <p className="eyebrow mb-3">
+                Your neighbourhood court club 
+            </p>
 
-                    <form 
-                        action={async () => {
-                            "use server";
+            <h1 className="text-4xl sm:text-5xl">
+                Welcome, {user.name}!
+            </h1>
 
-                            await signOut({
-                                redirectTo: "/login",
-                            });
-                        }}
-                    >
-                        <button
-                            type="submit"
-                            className="btn btn-outline"
-                        >
-                            Log out 
-                        </button>
-                    </form>
-                </nav>
-            </header>
+            <p className="text-muted mt-4">
+                Ready to get back on the court?
+            </p>
 
-            <main className="max-w-7xl mx-auto px-6 py-12">
+            <div className="pm=card mt-8">
 
-                <p className="eyebrow mb-3">
-                    Your neighbourhood court club 
+                <h2 className="pm-card-title">
+                    Your account 
+                </h2>
+
+                <p>
+                    <strong>Name:</strong>{" "}
+                    {user.name}
                 </p>
 
-                <h1 className="text-4xl sm:text-5xl">
-                    Welcome, {session?.user?.name}!
-                </h1>
-
-                <p className="text-muted mt-4">
-                    Ready to get back on the court?
+                <p>
+                    <strong>Email:</strong>{" "}
+                    {user.email}
                 </p>
 
-                <div className="pm-card mt-8">
+                <p>
+                    <strong>Account type:</strong>{" "}
+                    <span className="capitalize">
+                        {user.role}
+                    </span>
+                </p>
 
-                    <h2 className="pm-card-title">
-                        Your account 
-                    </h2>
-
-                    <p>
-                        <strong>Name:</strong>{" "}
-                        {session?.user?.name}
-                    </p>
-
-                    <p>
-                        <strong>Email:</strong>{" "}
-                        {session?.user?.email}
-                    </p>
-
-                    <p className="text-success mt-4 font-semibold">
-                        You are successfully logged in.
-                    </p>
-                </div>
-            </main>
-        </div>
-    );
+                <p className="text-success mt-4 font-semibold">
+                    You are successfully logged in.
+                </p>
+            </div>
+        </section>
+    )
 }
